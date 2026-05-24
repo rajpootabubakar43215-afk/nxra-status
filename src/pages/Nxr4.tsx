@@ -4,6 +4,7 @@ import {
   Wifi, Server, Users, Globe, Clock, Copy, Check,
   Lock, Monitor, RefreshCw, Crown, Flame, BarChart3, Zap, Search, Filter, Swords, Target,
 } from "lucide-react";
+import { NavLink } from "@/components/NavLink";
 import { fetchMasterlist, type CodServer } from "@/lib/codApi";
 import { parseCodString, stripCodCodes } from "@/lib/codColor";
 import { getMapImage } from "@/lib/mapImages";
@@ -116,9 +117,8 @@ function ServerCard({ s, featured }: { s: CodServer; featured?: boolean }) {
   const totalKills = ranked.reduce((a, p) => a + Math.max(0, p._s), 0);
 
   return (
-    <div className={`group relative bg-gradient-to-br from-zinc-900/80 via-zinc-900/50 to-black/80 border rounded-2xl overflow-hidden transition shadow-xl shadow-black/40 ${
-      featured ? "border-orange-500/60 ring-1 ring-orange-500/30 shadow-orange-900/30" : "border-zinc-800/80 hover:border-orange-700/40"
-    }`}>
+    <div className={`group relative bg-gradient-to-br from-zinc-900/80 via-zinc-900/50 to-black/80 border rounded-2xl overflow-hidden transition shadow-xl shadow-black/40 ${featured ? "border-orange-500/60 ring-1 ring-orange-500/30 shadow-orange-900/30" : "border-zinc-800/80 hover:border-orange-700/40"
+      }`}>
       <div className="h-[3px] bg-gradient-to-r from-red-500 via-orange-400 to-emerald-400" />
       {featured && (
         <div className="absolute top-2 right-2 z-10 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-300 border border-orange-500/40 backdrop-blur flex items-center gap-1">
@@ -339,6 +339,23 @@ export default function Nxr4() {
           </div>
 
           <div className="flex items-center gap-2 flex-wrap">
+            <NavLink
+              to="/"
+              className="text-xs px-3 py-2 rounded-full border border-zinc-800 bg-zinc-900/70 text-zinc-300 hover:text-zinc-100"
+              activeClassName="bg-orange-500/20 border-orange-500/60 text-orange-300"
+            >
+              Servers
+            </NavLink>
+            <NavLink
+              to="/top-players"
+              className="text-xs px-3 py-2 rounded-full border border-zinc-800 bg-zinc-900/70 text-zinc-300 hover:text-zinc-100"
+              activeClassName="bg-orange-500/20 border-orange-500/60 text-orange-300"
+            >
+              Top Players
+            </NavLink>
+          </div>
+
+          <div className="flex items-center gap-2 flex-wrap">
             <span className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-zinc-900/80 border border-zinc-800">
               <Wifi className="w-3.5 h-3.5 text-emerald-400" />
               <span className="text-zinc-400">Master:</span>
@@ -400,11 +417,10 @@ export default function Nxr4() {
           </div>
           <button
             onClick={() => setOnlyActive((v) => !v)}
-            className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-semibold uppercase tracking-wider transition ${
-              onlyActive
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-semibold uppercase tracking-wider transition ${onlyActive
                 ? "bg-emerald-500/15 border-emerald-500/50 text-emerald-300"
                 : "bg-zinc-900/60 border-zinc-800 text-zinc-400 hover:text-zinc-200"
-            }`}
+              }`}
           >
             <Target className="w-3.5 h-3.5" /> Active Only
           </button>
@@ -467,11 +483,10 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
   return (
     <button
       onClick={onClick}
-      className={`text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border transition ${
-        active
+      className={`text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border transition ${active
           ? "bg-orange-500/20 border-orange-500/60 text-orange-300"
           : "bg-zinc-900/60 border-zinc-800 text-zinc-500 hover:text-zinc-200"
-      }`}
+        }`}
     >
       {children}
     </button>
