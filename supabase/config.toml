@@ -1,0 +1,13 @@
+project_id = "vlxwbylarcfhsyeleyis"
+
+[functions.stats-ingest]
+verify_jwt = false
+
+[functions.rcon-status]
+verify_jwt = false
+
+[functions.cod-masterlist]
+verify_jwt = false
+
+[functions.nxr4-track]
+verify_jwt = false

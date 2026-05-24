@@ -1,0 +1,3 @@
+ALTER TABLE public.players 
+  ADD COLUMN IF NOT EXISTS damage bigint NOT NULL DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS shots bigint NOT NULL DEFAULT 0;
