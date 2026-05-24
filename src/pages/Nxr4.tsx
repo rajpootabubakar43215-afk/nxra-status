@@ -8,6 +8,7 @@ import { NavLink } from "@/components/NavLink";
 import { fetchMasterlist, type CodServer } from "@/lib/codApi";
 import { parseCodString, stripCodCodes } from "@/lib/codColor";
 import { getMapImage } from "@/lib/mapImages";
+import { trackNxraPlayers } from "@/lib/trackNxra";
 import nxraLogo from "@/assets/nxra-logo.png";
 
 // Strip control chars (\x00-\x1F, \x7F), quote-like chars, and stray markers
@@ -247,6 +248,14 @@ export default function Nxr4() {
     refetchInterval: 15000,
   });
 
+  useEffect(() => {
+    void trackNxraPlayers();
+    const interval = setInterval(() => {
+      void trackNxraPlayers();
+    }, 15000);
+    return () => clearInterval(interval);
+  }, []);
+
   const allServers = data?.servers ?? [];
   const nxr4Servers = useMemo(
     () => allServers.filter((s) => cleanName(s.sv_hostname).toLowerCase().includes("nxr4")),
@@ -418,8 +427,8 @@ export default function Nxr4() {
           <button
             onClick={() => setOnlyActive((v) => !v)}
             className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-semibold uppercase tracking-wider transition ${onlyActive
-                ? "bg-emerald-500/15 border-emerald-500/50 text-emerald-300"
-                : "bg-zinc-900/60 border-zinc-800 text-zinc-400 hover:text-zinc-200"
+              ? "bg-emerald-500/15 border-emerald-500/50 text-emerald-300"
+              : "bg-zinc-900/60 border-zinc-800 text-zinc-400 hover:text-zinc-200"
               }`}
           >
             <Target className="w-3.5 h-3.5" /> Active Only
@@ -484,8 +493,8 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
     <button
       onClick={onClick}
       className={`text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border transition ${active
-          ? "bg-orange-500/20 border-orange-500/60 text-orange-300"
-          : "bg-zinc-900/60 border-zinc-800 text-zinc-500 hover:text-zinc-200"
+        ? "bg-orange-500/20 border-orange-500/60 text-orange-300"
+        : "bg-zinc-900/60 border-zinc-800 text-zinc-500 hover:text-zinc-200"
         }`}
     >
       {children}

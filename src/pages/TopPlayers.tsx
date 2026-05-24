@@ -1,9 +1,10 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { RefreshCw, Trophy, Users, Clock, Server, Activity } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
+import { trackNxraPlayers } from "@/lib/trackNxra";
 
 type PlayerActivity = Database["public"]["Tables"]["nxr4_player_activity"]["Row"];
 
@@ -53,6 +54,14 @@ export default function TopPlayers() {
         },
         refetchInterval: 15000,
     });
+
+    useEffect(() => {
+        void trackNxraPlayers();
+        const interval = setInterval(() => {
+            void trackNxraPlayers();
+        }, 15000);
+        return () => clearInterval(interval);
+    }, []);
 
     const rows = data ?? [];
     const activeCount = useMemo(
